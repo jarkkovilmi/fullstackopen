@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 const Button = ({ setter, text, counter }) => {
-	console.log(setter)
 	const increaseValue = () => setter(counter + 1)
 	return (
 		<button onClick={increaseValue}>
