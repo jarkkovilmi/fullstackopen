@@ -23,9 +23,14 @@ const VoteButton = ({ selected, votes, setter}) => {
 const MostVotes = ({ anecdotes, votes}) => {
 	const mostVotes = Math.max(...votes)
 	const mostVotesIndex = votes.indexOf(mostVotes)
-	if (mostVotes > 0)
-	return <div>{anecdotes[mostVotesIndex]}</div>
-	else 
+	if (mostVotes > 0) {
+	return (
+		<div>
+			<div>{anecdotes[mostVotesIndex]}</div>
+			<div>has {mostVotes} votes</div>
+		</div>
+		)
+	}
 	return <div>No votes given yet.</div>
 }
 
