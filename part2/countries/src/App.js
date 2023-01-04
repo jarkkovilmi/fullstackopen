@@ -17,14 +17,14 @@ const App = () => {
 	}, [])
 
 	const showCountry = (countryName) => {
-		const searchFilteredCountries = countries.filter((country) => country.name.official.toLowerCase().includes(countryName.toLowerCase()))
+		const searchFilteredCountries = countries.filter((country) => country.name.common.toLowerCase().includes(countryName.toLowerCase()))
 		setFilteredCountries(searchFilteredCountries)
 		setCountryFilter('')
 	}
 
 	const handleFilterChange = (event) => {
 		setCountryFilter(event.target.value)
-		const searchFilteredCountries = countries.filter((country) => country.name.official.toLowerCase().includes(event.target.value.toLowerCase()))
+		const searchFilteredCountries = countries.filter((country) => country.name.common.toLowerCase().includes(event.target.value.toLowerCase()))
 		setFilteredCountries(searchFilteredCountries)
 	}
 	
@@ -35,7 +35,7 @@ const App = () => {
 				? <div>Too many matches, specify another filter</div>
 				: ((10 >= filteredCountries.length && filteredCountries.length > 1)
 					? <Countries filteredCountries={filteredCountries} showCountry={showCountry} />
-					: <Country filteredCountries={filteredCountries} /> )}
+					: <Country country={filteredCountries[0]} capital={filteredCountries[0].capital[0]} /> )}
 		</div>
   )
 }
