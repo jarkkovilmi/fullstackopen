@@ -34,14 +34,11 @@ const App = () => {
 					.then(returnedPerson => {
 						setPersons(persons.map(person => person.id !== personId ? person : returnedPerson))
 						setMessage({ type: "success", message: `Person ${newPerson.name} number updated` })
-						setTimeout(() => {
-							setMessage(null)
-						}, 2000)
-					})
+						setTimeout(() => {setMessage(null)}, 4000)})
 					.catch(error => {
-						setMessage({ type: "error", message: `Information of '${newPerson.name}' has already removed from server` })
-						setTimeout(() => {setMessage(null)}, 2000)
-						setPersons(persons.filter(p => p.name !== newPerson.name))
+						setMessage({ type: "error", message: error.response.data.error })
+						setTimeout(() => {setMessage(null)}, 4000)
+						// setPersons(persons.filter(p => p.name !== newPerson.name))
 					})
 			}
 		} else {
@@ -49,13 +46,10 @@ const App = () => {
 			.then(returnedPerson => {
 				setPersons(persons.concat(returnedPerson))
 				setMessage({ type: "success", message: `Added ${newPerson.name}` })
-				setTimeout(() => {
-					setMessage(null)
-				}, 2000)
-			})
+				setTimeout(() => {setMessage(null)}, 4000)})
 			.catch(error => {
         setMessage({ type: "error", message: error.response.data.error })
-        setTimeout(() => setMessage(null), 2000)
+        setTimeout(() => setMessage(null), 4000)
         console.error(error)
 			})
 		}
@@ -72,11 +66,11 @@ const App = () => {
 				setNewName('')
 				setNewNumber('')
 				setMessage({ type: "success", message: `Removed ${person.name}` })
-				setTimeout(() => {setMessage(null)}, 2000)
+				setTimeout(() => {setMessage(null)}, 4000)
 			})
 			.catch(error => {
         setMessage({ type: "error", message: `Person '${person.name}' was already removed from server` })
-        setTimeout(() => {setMessage(null)}, 2000)
+        setTimeout(() => {setMessage(null)}, 4000)
 				setPersons(persons.filter(p => p.id !== person.id))
       })
 		}
