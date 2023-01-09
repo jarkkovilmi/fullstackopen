@@ -1,0 +1,25 @@
+GET http://localhost:3001/api/blogs
+###
+GET http://localhost:3001/api/blogs/63bc37237c8533cf7f17ffb1
+###
+DELETE  http://localhost:3001/api/blogs/63b999cb1ec07c213870e26d
+###
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "My blog",
+  "author": "Clark Kent",
+  "url": "www.myblog.com",
+  "likes": 15
+}
+###
+PUT http://localhost:3001/api/blogs/63bc37237c8533cf7f17ffb1
+Content-Type: application/json
+
+{
+  "title": "My blog",
+  "author": "Clark Kent",
+  "url": "www.myblog.com",
+  "likes": 15
+}
