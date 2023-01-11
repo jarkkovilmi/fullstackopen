@@ -1,11 +1,10 @@
+const supertest = require('supertest')
+const mongoose = require('mongoose')
 const listHelper = require('../utils/list_helper')
+const app = require('../app')
+const api = supertest(app)
 
-test('dummy returns one', () => {
-	const blogs = []
-
-	const result = listHelper.dummy(blogs)
-	expect(result).toBe(1)
-})
+const Blog = require('../models/blog')
 
 const listWithoutBlogs = []
 
@@ -70,6 +69,34 @@ const listWithManyBlogs = [
 		__v: 0
 	}
 ]
+
+beforeEach(async () => {
+	await Blog.deleteMany({})
+	await Blog.insertMany(listWithManyBlogs)
+})
+
+test('notes are returned as json', async () => {
+	console.log('entered test')
+	await api
+		.get('/api/blogs')
+		.expect(200)
+		.expect('Content-Type', /application\/json/)
+})
+
+test('all notes are returned', async () => {
+	const response = await api.get('/api/blogs')
+	console.log(listWithManyBlogs.length)
+	console.log('response.body', response.body.length)
+	expect(response.body).toHaveLength(listWithManyBlogs.length)
+})
+
+test('dummy returns one', () => {
+	const blogs = []
+
+	const result = listHelper.dummy(blogs)
+	expect(result).toBe(1)
+})
+
 
 describe('total likes', () => {
 	test('of empty list is zero', () => {
@@ -137,4 +164,8 @@ describe('most likes', () => {
 		const result = listHelper.mostLikes(listWithManyBlogs)
 		expect(result).toEqual({ author: 'Edsger W. Dijkstra', likes: 17 })
 	})
+})
+
+afterAll(() => {
+	mongoose.connection.close()
 })
