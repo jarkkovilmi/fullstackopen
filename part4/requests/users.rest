@@ -1,9 +1,5 @@
 GET http://localhost:3001/api/users
 ###
-GET http://localhost:3001/api/users/63bc37237c8533cf7f17ffb1
-###
-DELETE  http://localhost:3001/api/users/63bef7be50e3d40979ffea4b
-###
 POST http://localhost:3001/api/users
 Content-Type: application/json
 

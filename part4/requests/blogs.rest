@@ -1,7 +1,5 @@
 GET http://localhost:3001/api/blogs
 ###
-GET http://localhost:3001/api/blogs/63bc37237c8533cf7f17ffb1
-###
 DELETE  http://localhost:3001/api/blogs/63bef7be50e3d40979ffea4b
 ###
 POST http://localhost:3001/api/blogs
@@ -13,6 +11,17 @@ Content-Type: application/json
   "url": "www.myblog.com",
   "likes": 17,
 	"userId": "63bffbd90250241dc55767c8"
+}
+###
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InR1c2VyIiwiaWQiOiI2M2JmZmJkOTAyNTAyNDFkYzU1NzY3YzgiLCJpYXQiOjE2NzM1Mzk1MzV9.5w-UdJ1_OVjCN9eWhDXPgIjCZWgELh-FQwEcWgzhtbs
+
+{
+  "title": "Weather blog",
+  "author": "Jack Bauer",
+  "url": "www.dailyweatherblog.com",
+  "likes": 44
 }
 ###
 PUT http://localhost:3001/api/blogs/63befabe43e7e5d18a0a60b5
