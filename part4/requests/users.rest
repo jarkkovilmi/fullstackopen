@@ -12,12 +12,3 @@ Content-Type: application/json
 	"name": "Test User",
 	"password": "password"
 }
-###
-PUT http://localhost:3001/api/users/63befabe43e7e5d18a0a60b5
-Content-Type: application/json
-
-{
-	"username": "tuser",
-	"name": "Test User",
-	"password": "password"
-}

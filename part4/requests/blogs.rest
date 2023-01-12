@@ -11,7 +11,8 @@ Content-Type: application/json
   "title": "My blog",
   "author": "Clark Kent",
   "url": "www.myblog.com",
-  "likes": 15
+  "likes": 17,
+	"userId": "63bffbd90250241dc55767c8"
 }
 ###
 PUT http://localhost:3001/api/blogs/63befabe43e7e5d18a0a60b5
