@@ -1,0 +1,23 @@
+GET http://localhost:3001/api/users
+###
+GET http://localhost:3001/api/users/63bc37237c8533cf7f17ffb1
+###
+DELETE  http://localhost:3001/api/users/63bef7be50e3d40979ffea4b
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+	"username": "tuser",
+	"name": "Test User",
+	"password": "password"
+}
+###
+PUT http://localhost:3001/api/users/63befabe43e7e5d18a0a60b5
+Content-Type: application/json
+
+{
+	"username": "tuser",
+	"name": "Test User",
+	"password": "password"
+}
