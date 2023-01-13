@@ -8,3 +8,12 @@ Content-Type: application/json
 	"name": "Test User",
 	"password": "password"
 }
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+	"username": "seconduser",
+	"name": "Second User",
+	"password": "password"
+}
