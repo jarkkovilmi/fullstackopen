@@ -9,6 +9,7 @@ const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const middleware = require('./utils/middleware')
+// const userExtractor = require('./utils/middleware/userExtractor')
 const logger = require('./utils/logger')
 
 logger.info('connecting to', config.MONGODB_URI)
