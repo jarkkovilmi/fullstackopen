@@ -1,13 +1,15 @@
+import './index.css'
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
 	const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
-	const [errorMessage, setErrorMessage] = useState(null)
+	const [notification, setNotification] = useState(null)
 	const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('')
 	const [user, setUser] = useState(null)
@@ -25,6 +27,11 @@ const App = () => {
     }
   }, [])
 
+	const showNotification = (type, message) => {
+		setNotification({ type: type, message: message })
+		setTimeout(() => setNotification(null), 4000)
+	}
+
 	const handleLogin = async (event) => {
 		event.preventDefault()
 		try {
@@ -35,11 +42,8 @@ const App = () => {
 			setUser(user)
 			setUsername('')
 			setPassword('')
-		} catch (exception) {
-			setErrorMessage('wrong credentials')
-			setTimeout(() => {
-				setErrorMessage(null)
-			}, 5000)
+		} catch (e) {
+			showNotification('error', e.response.data.error)
 		}
 	}
 
@@ -57,28 +61,27 @@ const App = () => {
 		console.log(newBlog)
 	}
 
-	const addBlog = (event) => {
+	const addBlog = async (event) => {
 		event.preventDefault()
-		console.log(newBlog)
-		const blogObject = {
-			title: newBlog.title,
-			author: newBlog.author,
-			url: newBlog.url,
-		}
-
-		blogService
-			.create(blogObject)
-			.then(returnedNote => {
-				setBlogs(blogs.concat(returnedNote))
-				setNewBlog({ author: '', title: '', url: '' })
+		try {
+			const returnedBlog = await blogService.create({
+				title: newBlog.title,
+				author: newBlog.author,
+				url: newBlog.url,
 			})
+			setBlogs(blogs.concat(returnedBlog))
+			setNewBlog({ author: '', title: '', url: '' })
+			showNotification('success', `a new blog "${returnedBlog.title}" by ${returnedBlog.author} added!`)
+		} catch(e) {
+			showNotification('error', e.response.data.error)
+		}
 	}
 
   if (user === null) {
     return (
       <div>
-				<h1>debug: {errorMessage}</h1>
         <h2>Log in to application</h2>
+				<Notification message={notification} />
         <LoginForm 
 					handleLogin={handleLogin}
 					username={username}
@@ -93,6 +96,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+			<Notification message={notification} />
 			<p>{user.name} logged in
 				<button onClick={() => handleLogout()}>logout</button>
 			</p> 
