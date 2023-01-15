@@ -21,11 +21,11 @@ const Blog = ({ blog, setBlogs }) => {
 		const blogId = event.target.value
 		const blogObject = {
 			...blog,
-			likes: blog.likes +1
+			likes: blog.likes + 1
 		}
 		await blogService.update(blogId, blogObject)
 		const blogs = await blogService.getAll()
-		setBlogs(blogs)
+		setBlogs(blogs.sort((a, b) => b.likes - a.likes))
 	}
 
 	return (
