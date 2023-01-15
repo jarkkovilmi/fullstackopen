@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import blogService from '../services/blogs'
 
-const Blog = ({blog}) => {
+const Blog = ({ blog, setBlogs }) => {
 	const [showAll, setShowAll] = useState(false)
 
 	const blogStyle = {
@@ -16,6 +17,17 @@ const Blog = ({blog}) => {
 	
 	const toggleShowAll = () => setShowAll(!showAll)
 
+	const likeHandler = async (event) => {
+		const blogId = event.target.value
+		const blogObject = {
+			...blog,
+			likes: blog.likes +1
+		}
+		await blogService.update(blogId, blogObject)
+		const blogs = await blogService.getAll()
+		setBlogs(blogs)
+	}
+
 	return (
 		<div style={blogStyle}>
 			<div>
@@ -25,7 +37,10 @@ const Blog = ({blog}) => {
 			</div>
 			<div style={showWhenVisible}>
 				<div>{blog.url}</div>
-				<div>likes {blog.likes}</div>
+				<div>
+					likes {blog.likes}
+					<button value={blog.id} onClick={likeHandler}>like</button>
+				</div>
 				<div>{blog.user.name}</div>
 			</div>
 		</div>  

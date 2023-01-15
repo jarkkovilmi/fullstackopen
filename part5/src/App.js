@@ -16,7 +16,7 @@ const App = () => {
 	const [user, setUser] = useState(null)
 
   useEffect(() => {
-    blogService.getAll().then(blogs => setBlogs( blogs ))  
+    blogService.getAll().then(blogs => setBlogs(blogs))  
   }, [])
 
 	useEffect(() => {
@@ -93,7 +93,7 @@ const App = () => {
 				<NoteForm createBlog={addBlog} />
 			</Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} setBlogs={setBlogs} />
 			)}
     </div>
   )
