@@ -20,7 +20,7 @@ const NoteForm = ({ createBlog }) => {
 		})
 		setNewBlog({ author: '', title: '', url: '' })
 	}
-	
+
 	return (
 		<div>
 			<h2>create new</h2>
@@ -37,7 +37,7 @@ const NoteForm = ({ createBlog }) => {
 				</div>
 				<button type="submit">create</button>
 			</form>
-			
+
 		</div>
 	)
 }

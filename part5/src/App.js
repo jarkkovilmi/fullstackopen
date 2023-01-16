@@ -9,25 +9,25 @@ import NoteForm from './components/NoteForm'
 import Togglable from './components/Togglable'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+	const [blogs, setBlogs] = useState([])
 	const [notification, setNotification] = useState(null)
-	const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('')
+	const [username, setUsername] = useState('')
+	const [password, setPassword] = useState('')
 	const [user, setUser] = useState(null)
 
-  useEffect(() => {
-    blogService.getAll()
-			.then(blogs => setBlogs(blogs.sort((a, b) => b.likes - a.likes)))  
-  }, [])
+	useEffect(() => {
+		blogService.getAll()
+			.then(blogs => setBlogs(blogs.sort((a, b) => b.likes - a.likes)))
+	}, [])
 
 	useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
-    }
-  }, [])
+		const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+		if (loggedUserJSON) {
+			const user = JSON.parse(loggedUserJSON)
+			setUser(user)
+			blogService.setToken(user.token)
+		}
+	}, [])
 
 	const showNotification = (type, message) => {
 		setNotification({ type: type, message: message })
@@ -49,7 +49,7 @@ const App = () => {
 		}
 	}
 
-	const handleLogout = (event) => {
+	const handleLogout = () => {
 		window.localStorage.removeItem('loggedBlogappUser')
 		setUser(null)
 	}
@@ -79,7 +79,7 @@ const App = () => {
 			// setBlogs(blogs.map((b) => (b.id !== returnedBlog.id ? b : returnedBlog)))
 		} catch(e) {
 			showNotification('error', e.response.data.error)
-	}
+		}
 	}
 
 	const deleteBlog = async (blog) => {
@@ -95,42 +95,42 @@ const App = () => {
 
 	const noteFormRef = useRef()
 
-  if (user === null) {
-    return (
-      <div>
-        <h2>Log in to application</h2>
+	if (user === null) {
+		return (
+			<div>
+				<h2>Log in to application</h2>
 				<Notification message={notification} />
-        <LoginForm 
+				<LoginForm
 					handleLogin={handleLogin}
 					username={username}
 					password={password}
 					setUsername={setUsername}
 					setPassword={setPassword}
 				/>
-      </div>
-    )
-  }
+			</div>
+		)
+	}
 
-  return (
-    <div>
-      <h2>blogs</h2>
+	return (
+		<div>
+			<h2>blogs</h2>
 			<Notification message={notification} />
 			<p>{user.name} logged in
 				<button onClick={() => handleLogout()}>logout</button>
-			</p> 
+			</p>
 			<Togglable buttonLabel="create a new blog" ref={noteFormRef}>
 				<NoteForm createBlog={addBlog} />
 			</Togglable>
-      {blogs.map(blog =>
-        <Blog 
+			{blogs.map(blog =>
+				<Blog
 					key={blog.id}
 					blog={blog}
 					addLike={() => addLike(blog)}
 					deleteBlog={() => deleteBlog(blog)}
 				/>
 			)}
-    </div>
-  )
+		</div>
+	)
 
 }
 

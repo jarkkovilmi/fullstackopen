@@ -4,16 +4,16 @@ const Blog = ({ blog, addLike, deleteBlog }) => {
 	const [showAll, setShowAll] = useState(false)
 
 	const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
+		paddingTop: 10,
+		paddingLeft: 2,
+		border: 'solid',
+		borderWidth: 1,
+		marginBottom: 5
+	}
 
 	const hideWhenVisible = { display: showAll ? 'none' : '' }
-  const showWhenVisible = { display: showAll ? '' : 'none' }
-	
+	const showWhenVisible = { display: showAll ? '' : 'none' }
+
 	const toggleShowAll = () => setShowAll(!showAll)
 
 	const loggedUser = JSON.parse(window.localStorage.getItem('loggedBlogappUser'))
@@ -21,7 +21,7 @@ const Blog = ({ blog, addLike, deleteBlog }) => {
 	return (
 		<div style={blogStyle}>
 			<div>
-			"{blog.title}" by {blog.author}
+			&quot;{blog.title}&quot; by {blog.author}
 				<button style={hideWhenVisible} onClick={toggleShowAll}>view</button>
 				<button style={showWhenVisible} onClick={toggleShowAll}>hide</button>
 			</div>
@@ -35,7 +35,7 @@ const Blog = ({ blog, addLike, deleteBlog }) => {
 				{blog.user.name === loggedUser.name &&
 				<button value={blog.id} onClick={deleteBlog}>remove</button>}
 			</div>
-		</div>  
-)}
+		</div>
+	)}
 
 export default Blog
