@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import blogService from '../services/blogs'
 
-const Blog = ({ blog, setBlogs }) => {
+const Blog = ({ blog, addLike, deleteBlog }) => {
 	const [showAll, setShowAll] = useState(false)
 
 	const blogStyle = {
@@ -17,21 +16,12 @@ const Blog = ({ blog, setBlogs }) => {
 	
 	const toggleShowAll = () => setShowAll(!showAll)
 
-	const likeHandler = async (event) => {
-		const blogId = event.target.value
-		const blogObject = {
-			...blog,
-			likes: blog.likes + 1
-		}
-		await blogService.update(blogId, blogObject)
-		const blogs = await blogService.getAll()
-		setBlogs(blogs.sort((a, b) => b.likes - a.likes))
-	}
+	const loggedUser = JSON.parse(window.localStorage.getItem('loggedBlogappUser'))
 
 	return (
 		<div style={blogStyle}>
 			<div>
-			{blog.title} {blog.author}
+			"{blog.title}" by {blog.author}
 				<button style={hideWhenVisible} onClick={toggleShowAll}>view</button>
 				<button style={showWhenVisible} onClick={toggleShowAll}>hide</button>
 			</div>
@@ -39,9 +29,11 @@ const Blog = ({ blog, setBlogs }) => {
 				<div>{blog.url}</div>
 				<div>
 					likes {blog.likes}
-					<button value={blog.id} onClick={likeHandler}>like</button>
+					<button value={blog.id} onClick={addLike}>like</button>
 				</div>
 				<div>{blog.user.name}</div>
+				{blog.user.name === loggedUser.name &&
+				<button value={blog.id} onClick={deleteBlog}>remove</button>}
 			</div>
 		</div>  
 )}

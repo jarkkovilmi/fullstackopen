@@ -58,10 +58,38 @@ const App = () => {
 		noteFormRef.current.toggleVisibility()
 		try {
 			const returnedBlog = await blogService.create(blogObject)
-			setBlogs(blogs.concat(returnedBlog))
+			const updatedBlogs = await blogService.getAll()
+			setBlogs(updatedBlogs.sort((a, b) => b.likes - a.likes))
+			// setBlogs(blogs.concat(returnedBlog))
 			showNotification('success', `a new blog "${returnedBlog.title}" by ${returnedBlog.author} added!`)
 		} catch(e) {
 			showNotification('error', e.response.data.error)
+		}
+	}
+
+	const addLike = async (blog) => {
+		const blogObject = {
+			...blog,
+			likes: blog.likes + 1
+		}
+		try {
+			await blogService.update(blog.id, blogObject)
+			const updatedBlogs = await blogService.getAll()
+			setBlogs(updatedBlogs.sort((a, b) => b.likes - a.likes))
+			// setBlogs(blogs.map((b) => (b.id !== returnedBlog.id ? b : returnedBlog)))
+		} catch(e) {
+			showNotification('error', e.response.data.error)
+	}
+	}
+
+	const deleteBlog = async (blog) => {
+		if (window.confirm(`Remove blog "${blog.title}" by ${blog.author}`)) {
+			try {
+				await blogService.remove(blog.id)
+				setBlogs(blogs.filter(b => b.id !== blog.id))
+			} catch(e) {
+				showNotification('error', e.response.data.error)
+			}
 		}
 	}
 
@@ -94,7 +122,12 @@ const App = () => {
 				<NoteForm createBlog={addBlog} />
 			</Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} setBlogs={setBlogs} />
+        <Blog 
+					key={blog.id}
+					blog={blog}
+					addLike={() => addLike(blog)}
+					deleteBlog={() => deleteBlog(blog)}
+				/>
 			)}
     </div>
   )
