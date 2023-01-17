@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Blog = ({ blog, addLike, deleteBlog }) => {
+const Blog = ({ blog, user, addLike, deleteBlog }) => {
 	const [showAll, setShowAll] = useState(false)
 
 	const blogStyle = {
@@ -16,8 +16,6 @@ const Blog = ({ blog, addLike, deleteBlog }) => {
 
 	const toggleShowAll = () => setShowAll(!showAll)
 
-	const loggedUser = JSON.parse(window.localStorage.getItem('loggedBlogappUser'))
-
 	return (
 		<div style={blogStyle}>
 			<div>
@@ -25,14 +23,14 @@ const Blog = ({ blog, addLike, deleteBlog }) => {
 				<button style={hideWhenVisible} onClick={toggleShowAll}>view</button>
 				<button style={showWhenVisible} onClick={toggleShowAll}>hide</button>
 			</div>
-			<div style={showWhenVisible}>
+			<div className="blogContent" style={showWhenVisible}>
 				<div>{blog.url}</div>
 				<div>
 					likes {blog.likes}
 					<button value={blog.id} onClick={addLike}>like</button>
 				</div>
 				<div>{blog.user.name}</div>
-				{blog.user.name === loggedUser.name &&
+				{blog.user.name === user.name &&
 				<button value={blog.id} onClick={deleteBlog}>remove</button>}
 			</div>
 		</div>

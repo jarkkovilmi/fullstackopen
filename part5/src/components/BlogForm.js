@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const NoteForm = ({ createBlog }) => {
+const BlogForm = ({ createBlog }) => {
 	const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
 
 	const handleChange = (event) => {
@@ -42,4 +42,4 @@ const NoteForm = ({ createBlog }) => {
 	)
 }
 
-export default NoteForm
+export default BlogForm

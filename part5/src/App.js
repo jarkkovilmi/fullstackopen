@@ -5,7 +5,7 @@ import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import NoteForm from './components/NoteForm'
+import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 
 const App = () => {
@@ -68,6 +68,7 @@ const App = () => {
 	}
 
 	const addLike = async (blog) => {
+		console.log(user)
 		const blogObject = {
 			...blog,
 			likes: blog.likes + 1
@@ -119,12 +120,13 @@ const App = () => {
 				<button onClick={() => handleLogout()}>logout</button>
 			</p>
 			<Togglable buttonLabel="create a new blog" ref={noteFormRef}>
-				<NoteForm createBlog={addBlog} />
+				<BlogForm createBlog={addBlog} />
 			</Togglable>
 			{blogs.map(blog =>
 				<Blog
 					key={blog.id}
 					blog={blog}
+					user={user}
 					addLike={() => addLike(blog)}
 					deleteBlog={() => deleteBlog(blog)}
 				/>
