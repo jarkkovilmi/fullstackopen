@@ -4,7 +4,6 @@ const BlogForm = ({ createBlog }) => {
 	const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
 
 	const handleChange = (event) => {
-		console.log(event.target.value)
 		setNewBlog({
 			...newBlog,
 			[event.target.name]: event.target.value

@@ -17,7 +17,6 @@ describe('Blog app', function() {
 
 	describe('Login', function() {
 		it('succeeds with correct credentials', function() {
-			cy.contains('login').click()
 			cy.get('#username').type('tuser')
 			cy.get('#password').type('password')
 			cy.get('#login-button').click()
@@ -26,7 +25,6 @@ describe('Blog app', function() {
 		})
 
 		it('fails with wrong credentials', function() {
-			cy.contains('login').click()
 			cy.get('#username').type('tuser')
 			cy.get('#password').type('wrong')
 			cy.get('#login-button').click()
@@ -56,14 +54,28 @@ describe('Blog app', function() {
 
 		describe('and several notes exist', function () {
 			beforeEach(function () {
-				cy.createBlog({ title: 'first blog', author: 'first author', url: 'first url' })
-				cy.createBlog({ title: 'second blog', author: 'second author', url: 'second url' })
-				cy.createBlog({ title: 'third blog', author: 'third author', url: 'third url' })
+				cy.createBlog({ title: 'first blog', author: 'first author', url: 'first url', likes: 1 })
+				cy.createBlog({ title: 'second blog', author: 'second author', url: 'second url', likes: 5 })
+				cy.createBlog({ title: 'third blog', author: 'third author', url: 'third url', likes: 3 })
 			})
 
-			it.only('the like button can be pressed', function () {
+			it('the like button can be pressed', function () {
 				cy.contains('"first blog" by first author').contains('view').click()
+				cy.contains('"first blog" by first author').parent().should('contain', 'likes 1')
 				cy.contains('"first blog" by first author').parent().contains('like').click()
+				cy.contains('"first blog" by first author').parent().should('contain', 'likes 2')
+			})
+
+			it('a blog can be deleted by the user who added it', function () {
+				cy.contains('"first blog" by first author').contains('view').click()
+				cy.contains('"first blog" by first author').parent().contains('remove').click()
+				cy.get('html').should('not.contain', '"first blog" by first author')
+			})
+
+			it('the blogs are sorted in descending order by likes', function () {
+				cy.get('.blogContent').eq(0).should('contain', 'second url')
+				cy.get('.blogContent').eq(1).should('contain', 'third url')
+				cy.get('.blogContent').eq(2).should('contain', 'first url')
 			})
 		})
 	})

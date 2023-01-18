@@ -68,7 +68,6 @@ const App = () => {
 	}
 
 	const addLike = async (blog) => {
-		console.log(user)
 		const blogObject = {
 			...blog,
 			likes: blog.likes + 1
