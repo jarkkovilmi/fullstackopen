@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   Link,
-  useParams
+  useParams,
+	useNavigate
 } from "react-router-dom"
 
 const Menu = () => {
@@ -125,10 +125,14 @@ const App = () => {
   ])
 
   const [notification, setNotification] = useState('')
+	const navigate = useNavigate()
 
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
     setAnecdotes(anecdotes.concat(anecdote))
+		setNotification(`a new anecdote "${anecdote.content}" created!`)
+		navigate('/')
+    setTimeout(() => setNotification(null), 5000)
   }
 
   const anecdoteById = (id) =>
@@ -147,16 +151,15 @@ const App = () => {
 
   return (
     <div>
-		<Router>
       <h1>Software anecdotes</h1>
       <Menu />
+			{notification && <div>{notification}</div>}
 			<Routes>
 				<Route path="/anecdotes/:id" element={<Anecdote anecdotes={anecdotes} />} />
         <Route path="/create" element={<CreateNew addNew={addNew} />} />
         <Route path="/about" element={<About />} />
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />      
       </Routes>
-		</Router>
       <Footer />
     </div>
   )
