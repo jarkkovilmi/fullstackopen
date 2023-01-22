@@ -3,7 +3,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  Link,
+  useParams
 } from "react-router-dom"
 
 const Menu = () => {
@@ -23,10 +24,26 @@ const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}</li>)}
+      {anecdotes.map(anecdote => 
+				<li key={anecdote.id}>
+					<Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+				</li>
+			)}
     </ul>
   </div>
 )
+
+const Anecdote = ({ anecdotes }) => {
+  const id = useParams().id
+  const anecdote = anecdotes.find(a => a.id === Number(id))
+  return (
+    <div>
+      <h2>{anecdote.content} by {anecdote.author}</h2>
+      <div>has {anecdote.votes} votes</div>
+      <div>for more info see <a href={anecdote.info} target="_blank" rel="noreferrer">{anecdote.info}</a></div><br/>
+    </div>
+  )
+}
 
 const About = () => (
   <div>
@@ -133,7 +150,8 @@ const App = () => {
 		<Router>
       <h1>Software anecdotes</h1>
       <Menu />
-			<Routes> 
+			<Routes>
+				<Route path="/anecdotes/:id" element={<Anecdote anecdotes={anecdotes} />} />
         <Route path="/create" element={<CreateNew addNew={addNew} />} />
         <Route path="/about" element={<About />} />
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />      
