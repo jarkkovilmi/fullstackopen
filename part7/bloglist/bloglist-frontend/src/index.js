@@ -10,4 +10,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 	</Provider>
 )
 
-// store.subscribe(() => console.log(store.getState()))
+store.subscribe(() => console.log(store.getState()))
