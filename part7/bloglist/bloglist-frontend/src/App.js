@@ -3,13 +3,13 @@ import { useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
-import blogService from './services/blogs'
+// import blogService from './services/blogs'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
-import { initializeBlogs, setBlogs, createBlog } from './reducers/blogReducer'
-import { setUser } from './reducers/credentialReducer'
+import { initializeBlogs, createBlog, addLike, removeBlog } from './reducers/blogReducer'
+import { setLoggedUser, setUser } from './reducers/credentialReducer'
 
 const App = () => {
 	const dispatch = useDispatch()
@@ -18,13 +18,7 @@ const App = () => {
 
 	useEffect(() => {
 		dispatch(initializeBlogs())
-
-		const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-		if (loggedUserJSON) {
-			const user = JSON.parse(loggedUserJSON)
-			dispatch(setUser(user))
-			blogService.setToken(user.token)
-		}
+		dispatch(setLoggedUser())
 	}, [dispatch])
 
 	const handleLogout = () => {
@@ -42,16 +36,9 @@ const App = () => {
 		}
 	}
 
-	const addLike = async (blog) => {
-		const blogObject = {
-			...blog,
-			likes: blog.likes + 1
-		}
+	const like = async (blogObject) => {
 		try {
-			await blogService.update(blog.id, blogObject)
-			const updatedBlogs = await blogService.getAll()
-			dispatch(setBlogs(updatedBlogs.sort((a, b) => b.likes - a.likes)))
-			// setBlogs(blogs.map((b) => (b.id !== returnedBlog.id ? b : returnedBlog)))
+			dispatch(addLike(blogObject))
 		} catch(e) {
 			dispatch(setNotification('error', e.response.data.error))
 		}
@@ -60,8 +47,7 @@ const App = () => {
 	const deleteBlog = async (blog) => {
 		if (window.confirm(`Remove blog "${blog.title}" by ${blog.author}`)) {
 			try {
-				await blogService.remove(blog.id)
-				dispatch(setBlogs(blogs.filter(b => b.id !== blog.id)))
+				dispatch(removeBlog(blog.id))
 			} catch(e) {
 				dispatch(setNotification('error', e.response.data.error))
 			}
@@ -95,7 +81,7 @@ const App = () => {
 					key={blog.id}
 					blog={blog}
 					user={user}
-					addLike={() => addLike(blog)}
+					like={() => like(blog)}
 					deleteBlog={() => deleteBlog(blog)}
 				/>
 			)}
