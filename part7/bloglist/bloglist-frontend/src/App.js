@@ -7,10 +7,12 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
+import { useDispatch } from 'react-redux'
+import { setNotification } from './reducers/notificationReducer'
 
 const App = () => {
+	const dispatch = useDispatch()
 	const [blogs, setBlogs] = useState([])
-	const [notification, setNotification] = useState(null)
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 	const [user, setUser] = useState(null)
@@ -29,11 +31,6 @@ const App = () => {
 		}
 	}, [])
 
-	const showNotification = (type, message) => {
-		setNotification({ type: type, message: message })
-		setTimeout(() => setNotification(null), 4000)
-	}
-
 	const handleLogin = async (event) => {
 		event.preventDefault()
 		try {
@@ -44,8 +41,10 @@ const App = () => {
 			setUser(user)
 			setUsername('')
 			setPassword('')
+			dispatch(setNotification('success', `Logged in as ${user.name}!`))
+
 		} catch (e) {
-			showNotification('error', e.response.data.error)
+			dispatch(setNotification('error', e.response.data.error))
 		}
 	}
 
@@ -61,9 +60,9 @@ const App = () => {
 			const updatedBlogs = await blogService.getAll()
 			setBlogs(updatedBlogs.sort((a, b) => b.likes - a.likes))
 			// setBlogs(blogs.concat(returnedBlog))
-			showNotification('success', `a new blog "${returnedBlog.title}" by ${returnedBlog.author} added!`)
+			dispatch(setNotification('success', `a new blog "${returnedBlog.title}" by ${returnedBlog.author} added!`))
 		} catch(e) {
-			showNotification('error', e.response.data.error)
+			dispatch(setNotification('error', e.response.data.error))
 		}
 	}
 
@@ -78,7 +77,7 @@ const App = () => {
 			setBlogs(updatedBlogs.sort((a, b) => b.likes - a.likes))
 			// setBlogs(blogs.map((b) => (b.id !== returnedBlog.id ? b : returnedBlog)))
 		} catch(e) {
-			showNotification('error', e.response.data.error)
+			dispatch(setNotification('error', e.response.data.error))
 		}
 	}
 
@@ -88,7 +87,7 @@ const App = () => {
 				await blogService.remove(blog.id)
 				setBlogs(blogs.filter(b => b.id !== blog.id))
 			} catch(e) {
-				showNotification('error', e.response.data.error)
+				dispatch(setNotification('error', e.response.data.error))
 			}
 		}
 	}
@@ -99,7 +98,7 @@ const App = () => {
 		return (
 			<div>
 				<h2>Log in to application</h2>
-				<Notification message={notification} />
+				<Notification />
 				<LoginForm
 					handleLogin={handleLogin}
 					username={username}
@@ -114,7 +113,7 @@ const App = () => {
 	return (
 		<div>
 			<h2>blogs</h2>
-			<Notification message={notification} />
+			<Notification />
 			<p>{user.name} logged in
 				<button onClick={() => handleLogout()}>logout</button>
 			</p>
