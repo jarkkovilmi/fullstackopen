@@ -1,16 +1,16 @@
 import './index.css'
-
 import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Routes, Route, useNavigate } from 'react-router-dom'
+import { initializeUsers } from './reducers/userReducer'
+import { initializeBlogs } from './reducers/blogReducer'
+import { setLoggedUser, setUser } from './reducers/credentialReducer'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import Users from './components/Users'
-import { useDispatch, useSelector } from 'react-redux'
-import { initializeBlogs } from './reducers/blogReducer'
-import { setLoggedUser, setUser } from './reducers/credentialReducer'
-import { initializeUsers } from './reducers/userReducer'
-import { Routes, Route, useNavigate } from 'react-router-dom'
 import User from './components/User'
-import Home from './components/Home'
+import Blogs from './components/Blogs'
+import Blog from './components/Blog'
 
 const App = () => {
 	const dispatch = useDispatch()
@@ -47,9 +47,10 @@ const App = () => {
 				<button onClick={() => handleLogout()}>logout</button>
 			</p>
 			<Routes>
-				<Route path="/" element={<Home />}/>
+				<Route path="/" element={<Blogs />}/>
 				<Route path="/users" element={<Users />} />
 				<Route path="/users/:id" element={<User />} />
+				<Route path="/blogs/:id" element={<Blog />} />
 			</Routes>
 		</div>
 	)

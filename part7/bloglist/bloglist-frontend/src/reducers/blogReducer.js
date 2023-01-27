@@ -50,7 +50,6 @@ export const createBlog = (object) => {
 export const deleteBlogById = (blogId) => {
 	return async (dispatch) => {
 		try {
-			console.log('blogid', blogId)
 			await blogService.remove(blogId)
 			dispatch(removeBlog(blogId))
 		} catch(e) {
