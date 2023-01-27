@@ -1,22 +1,21 @@
 import './index.css'
-import { useEffect, useRef } from 'react'
-import Blog from './components/Blog'
+
+import { useEffect } from 'react'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
-// import userService from './services/users'
-import BlogForm from './components/BlogForm'
-import Togglable from './components/Togglable'
-import Users from './components/User'
+import Users from './components/Users'
 import { useDispatch, useSelector } from 'react-redux'
-import { setNotification } from './reducers/notificationReducer'
-import { initializeBlogs, createBlog, addLike, removeBlog } from './reducers/blogReducer'
+import { initializeBlogs } from './reducers/blogReducer'
 import { setLoggedUser, setUser } from './reducers/credentialReducer'
 import { initializeUsers } from './reducers/userReducer'
+import { Routes, Route, useNavigate } from 'react-router-dom'
+import User from './components/User'
+import Home from './components/Home'
 
 const App = () => {
 	const dispatch = useDispatch()
-	const blogs = useSelector(state => state.blogs)
 	const user = useSelector(state => state.credentials.user)
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		dispatch(initializeBlogs())
@@ -27,37 +26,8 @@ const App = () => {
 	const handleLogout = () => {
 		window.localStorage.removeItem('loggedBlogappUser')
 		dispatch(setUser(null))
+		navigate('/')
 	}
-
-	const addBlog = async (blogObject) => {
-		noteFormRef.current.toggleVisibility()
-		try {
-			dispatch(createBlog(blogObject))
-			dispatch(setNotification('success', `a new blog "${blogObject.title}" by ${blogObject.author} added!`))
-		} catch(e) {
-			dispatch(setNotification('error', e.response.data.error))
-		}
-	}
-
-	const like = async (blogObject) => {
-		try {
-			dispatch(addLike(blogObject))
-		} catch(e) {
-			dispatch(setNotification('error', e.response.data.error))
-		}
-	}
-
-	const deleteBlog = async (blog) => {
-		if (window.confirm(`Remove blog "${blog.title}" by ${blog.author}`)) {
-			try {
-				dispatch(removeBlog(blog.id))
-			} catch(e) {
-				dispatch(setNotification('error', e.response.data.error))
-			}
-		}
-	}
-
-	const noteFormRef = useRef()
 
 	if (user === null) {
 		return (
@@ -73,25 +43,16 @@ const App = () => {
 		<div>
 			<h2>blogs</h2>
 			<Notification />
-			<p>{user.name} logged in
+			<p>{user.name} logged in<br/>
 				<button onClick={() => handleLogout()}>logout</button>
 			</p>
-			<Togglable buttonLabel="create a new blog" ref={noteFormRef}>
-				<BlogForm createBlog={addBlog} />
-			</Togglable>
-			{blogs.map(blog =>
-				<Blog
-					key={blog.id}
-					blog={blog}
-					user={user}
-					like={() => like(blog)}
-					deleteBlog={() => deleteBlog(blog)}
-				/>
-			)}
-			<Users />
+			<Routes>
+				<Route path="/" element={<Home />}/>
+				<Route path="/users" element={<Users />} />
+				<Route path="/users/:id" element={<User />} />
+			</Routes>
 		</div>
 	)
-
 }
 
 export default App

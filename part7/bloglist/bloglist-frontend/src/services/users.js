@@ -27,6 +27,7 @@ const update = async (id, newObject) => {
 }
 
 const remove = async (id) => {
+	console.log('ID', id)
 	const config = {
 		headers: { Authorization: token },
 	}
