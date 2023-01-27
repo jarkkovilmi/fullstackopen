@@ -3,13 +3,15 @@ import { useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
-// import blogService from './services/blogs'
+// import userService from './services/users'
 import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
+import Users from './components/User'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs, createBlog, addLike, removeBlog } from './reducers/blogReducer'
 import { setLoggedUser, setUser } from './reducers/credentialReducer'
+import { initializeUsers } from './reducers/userReducer'
 
 const App = () => {
 	const dispatch = useDispatch()
@@ -18,6 +20,7 @@ const App = () => {
 
 	useEffect(() => {
 		dispatch(initializeBlogs())
+		dispatch(initializeUsers())
 		dispatch(setLoggedUser())
 	}, [dispatch])
 
@@ -85,6 +88,7 @@ const App = () => {
 					deleteBlog={() => deleteBlog(blog)}
 				/>
 			)}
+			<Users />
 		</div>
 	)
 
