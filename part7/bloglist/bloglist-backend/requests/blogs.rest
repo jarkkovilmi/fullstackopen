@@ -21,5 +21,12 @@ Content-Type: application/json
   "title": "My blog",
   "author": "Clark Kent",
   "url": "www.myblog.com",
-  "likes": 77
+  "likes": 78
+}
+###
+POST http://localhost:3001/api/blogs/63c43e4db449c15e439f9381/comments
+Content-Type: application/json
+
+{
+	"comment": "new comment"
 }
