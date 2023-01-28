@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import { setUser } from '../reducers/credentialReducer'
+import { Link, Chip, Button } from '@mui/material'
 
 const Menu = ({ user }) => {
 	const dispatch = useDispatch()
@@ -10,6 +11,8 @@ const Menu = ({ user }) => {
 		paddingRight: 5
 	}
 
+	const label = `${user.name} logged in`
+
 	const handleLogout = () => {
 		window.localStorage.removeItem('loggedBlogappUser')
 		dispatch(setUser(null))
@@ -18,9 +21,9 @@ const Menu = ({ user }) => {
 
 	return (
 		<div>
-			<Link style={padding} to="/">blogs</Link>
-			<Link style={padding} to="/users">users</Link>
-			{user.name} logged in <button onClick={() => handleLogout()}>logout</button>
+			<Link component={RouterLink} style={padding} to="/">blogs</Link>
+			<Link component={RouterLink} style={padding} to="/users">users</Link>
+			<Chip variant="plain" label={label} size="lg" /><Button onClick={() => handleLogout()}>logout</Button>
 		</div>
 	)
 }

@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import { useRef } from 'react'
 import { createBlog } from '../reducers/blogReducer'
 import Togglable from './Togglable'
 import BlogForm from './BlogForm'
+import { Table, TableBody, TableCell, TableContainer, TableRow,
+	Paper, Link } from '@mui/material'
 
 const Blogs = () => {
 	const dispatch = useDispatch()
@@ -14,14 +16,6 @@ const Blogs = () => {
 		dispatch(createBlog(blogObject))
 	}
 
-	const blogStyle = {
-		paddingTop: 10,
-		paddingLeft: 2,
-		border: 'solid',
-		borderWidth: 1,
-		marginBottom: 5
-	}
-
 	const blogFormRef = useRef()
 
 	return (
@@ -29,11 +23,22 @@ const Blogs = () => {
 			<Togglable buttonLabel="create a new blog" ref={blogFormRef}>
 				<BlogForm createBlog={addBlog} />
 			</Togglable>
-			{blogs.map(blog =>
-				<div style={blogStyle} key={blog.id}>
-					<Link to={`/blogs/${blog.id}`}>&quot;{blog.title}&quot; by {blog.author}</Link>
-				</div>
-			)}
+			<TableContainer component={Paper}>
+				<Table>
+					<TableBody>
+						{blogs.map(blog => (
+							<TableRow key={blog.id}>
+								<TableCell>
+									<Link component={RouterLink} to={`/blogs/${blog.id}`}>&quot;{blog.title}&quot; by {blog.author}</Link>
+								</TableCell>
+								<TableCell>
+									{blog.author}
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</TableContainer>
 		</div>
 	)
 }

@@ -12,6 +12,7 @@ import User from './components/User'
 import Blogs from './components/Blogs'
 import Blog from './components/Blog'
 import Menu from './components/Menu'
+import { Container } from '@mui/material'
 
 const App = () => {
 	const dispatch = useDispatch()
@@ -34,7 +35,7 @@ const App = () => {
 	}
 
 	return (
-		<div>
+		<Container>
 			<Menu user={user} />
 			<h2>blog app</h2>
 			<Notification />
@@ -44,7 +45,7 @@ const App = () => {
 				<Route path="/users" element={<Users />} />
 				<Route path="/users/:id" element={<User />} />
 			</Routes>
-		</div>
+		</Container>
 	)
 }
 

@@ -1,10 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-	message: '',
-	type: ''
-}
+const initialState = { message: '', type: '' }
 
 const notificationSlice = createSlice({
 	name: 'notification',

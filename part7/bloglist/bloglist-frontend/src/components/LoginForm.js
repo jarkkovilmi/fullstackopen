@@ -1,9 +1,9 @@
-// import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { setPassword, setUsername, setUser } from '../reducers/credentialReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
+import { Button } from '@mui/material'
 
 const LoginForm = () => {
 	const dispatch = useDispatch()
@@ -45,7 +45,8 @@ const LoginForm = () => {
 					onChange={({ target }) => dispatch(setPassword(target.value))}
 				/>
 			</div>
-			<button id="login-button" type="submit">login</button>
+			<Button sx={{ m: 1, px: 3 }} variant="contained" color="primary"
+				id="login-button" type="submit">login</Button>
 		</form>
 	)
 }
