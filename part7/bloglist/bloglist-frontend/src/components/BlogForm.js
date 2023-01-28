@@ -10,7 +10,7 @@ const BlogForm = ({ createBlog }) => {
 		})
 	}
 
-	const addBlog = async (event) => {
+	const addBlog = (event) => {
 		event.preventDefault()
 		createBlog({
 			title: newBlog.title,

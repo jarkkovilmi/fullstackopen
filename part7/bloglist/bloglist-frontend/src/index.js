@@ -12,5 +12,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 		</Provider>
 	</Router>
 )
-
-store.subscribe(() => console.log(store.getState()))
