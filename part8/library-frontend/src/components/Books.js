@@ -9,7 +9,7 @@ const Books = ({ show }) => {
   }
 
   const books = result.data.allBooks
-
+	
   return (
     <div>
       <h2>books</h2>
