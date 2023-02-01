@@ -1,8 +1,18 @@
-const Authors = ({ authors, show }) => {
+import { useQuery } from "@apollo/client"
+import { ALL_AUTHORS } from "../queries"
 
-  if (!show) {
-    return null
+const Authors = ({ show }) => {
+	const result = useQuery(ALL_AUTHORS)
+
+	if (!show) {
+		return null
+	}
+	
+	if (result.loading)  {
+		return <div>loading...</div>
   }
+	
+	const authors = result.data.allAuthors
 
   return (
     <div>
