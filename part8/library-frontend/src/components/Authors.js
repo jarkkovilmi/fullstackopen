@@ -24,7 +24,6 @@ const Authors = ({ show }) => {
 	const submit = async (event) => {
 		event.preventDefault()
 		editAuthor({ variables: { name, setBornTo: born } })
-		setName('')
 		setBorn('')
 	}
 

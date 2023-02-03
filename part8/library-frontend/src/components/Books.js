@@ -8,7 +8,7 @@ const Books = ({ show }) => {
     return null
 
   const books = result.data.allBooks
-
+	
   return (
     <div>
       <h2>books</h2>
