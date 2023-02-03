@@ -4,6 +4,7 @@ import LoginForm from './components/LoginForm'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
+import Recommend from './components/Recommend'
 
 const Notify = ({ errorMessage }) => {
 	if ( !errorMessage ) {
@@ -41,12 +42,13 @@ const App = () => {
       <div>
         <button onClick={() => setPage('authors')}>authors</button>
         <button onClick={() => setPage('books')}>books</button>
-        {token && 
-				<button onClick={() => setPage('add')}>add book</button>}
-				{token ?
-				<button onClick={logout}>logout</button>
-				:
-        <button onClick={() => setPage('login')}>login</button>
+				{token
+					? <>
+						<button onClick={() => setPage('add')}>add book</button>
+						<button onClick={() => setPage('recommend')}>recommend</button>
+						<button onClick={logout}>logout</button>
+						</>
+					:	<button onClick={() => setPage('login')}>login</button>
 				}
       </div>
 			<Notify errorMessage={errorMessage} />
@@ -56,8 +58,9 @@ const App = () => {
       <NewBook show={page === 'add'} setError={notify} />}
       <LoginForm show={page === 'login'} setToken={setToken} setError={notify}
 				setPage={setPage} />
+      <Recommend show={page === 'recommend'} />
     </div>
   )
 }
 
-export default App
+export default App 
