@@ -124,7 +124,7 @@ const resolvers = {
 			try {
 				await Author.findByIdAndUpdate(author._id, author, { new: true })
 			} catch (error) {
-				throw new UserInputError(error.message, { invalidArgs: args  })
+				throw new UserInputError(error.message, { invalidArgs: args })
 			}
 			return author
 		},
@@ -137,9 +137,7 @@ const resolvers = {
 			try {
 				await user.save()
 			} catch (error) {
-				throw new UserInputError(error.message, {
-					invalidArgs: args,
-				})
+				throw new UserInputError(error.message, { invalidArgs: args })
 			}
 			return user
 		},
