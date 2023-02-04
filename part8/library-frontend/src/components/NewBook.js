@@ -13,7 +13,21 @@ const NewBook = ({ setError, show }) => {
 		refetchQueries: [ { query: ALL_BOOKS }, { query: ALL_AUTHORS } ],
 		onError: (error) => {
       setError(error.graphQLErrors[0].message)
-    }
+    },
+		update: (cache, response) => {
+			for (const genre of [null, ...genres]) {
+				try {
+					cache.updateQuery({ query: ALL_BOOKS, variables: { genre } },
+						 ({ allBooks }) => {
+							return {
+								allBooks: allBooks.concat(response.data.addBook)
+							}
+					})
+				} catch (error) {
+					console.log(error)
+				}
+			}
+    } 
 	})
 
   if (!show) {
