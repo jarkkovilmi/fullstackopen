@@ -14,8 +14,8 @@ const calculateExercises = (target: number, hours: number[]): Result  => {
 	const average = hours.reduce((a, b) => a + b) / periodLength;
 	const success: boolean = average >= target;
 
-	let rating: number;
-	let ratingDescription: string;
+	let rating!: number;
+	let ratingDescription!: string;
 
 	switch (true) {
 		case success:

@@ -19,6 +19,8 @@ const calculateBmi = (height: number, weight: number): string => {
 		case (bmi >= 40):
 			return 'Obese (Class III)';
 	}
+
+	return 'BMI calculation failed';
 };
 
 interface BmiValues {
