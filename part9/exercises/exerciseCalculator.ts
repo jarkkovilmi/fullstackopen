@@ -8,7 +8,7 @@ interface Result {
 	average: number
 }
 
-const calculateExercises = (target: number, hours: number[]): Result  => {
+export const calculateExercises = (target: number, hours: number[]): Result  => {
 	const periodLength = hours.length;
 	const trainingDays = hours.filter(value => value !== 0).length;
 	const average = hours.reduce((a, b) => a + b) / periodLength;
