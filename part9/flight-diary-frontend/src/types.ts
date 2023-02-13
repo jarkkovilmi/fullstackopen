@@ -7,3 +7,7 @@ export interface Diary {
 }
 
 export type NewDiary = Omit<Diary, 'id'>
+
+export interface NotificationProps {
+	notification: string
+}

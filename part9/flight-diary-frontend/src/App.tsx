@@ -1,6 +1,22 @@
 import { useEffect, useState } from 'react';
-import { Diary } from './types'
+import { Diary, NotificationProps } from './types';
 import { getAllDiaries, createDiary } from './services/diaryService';
+
+const Notification = ({ notification }: NotificationProps) => {
+	const style = {
+		color: "red",
+		fontSize: "20px",
+		paddingBottom: "10px"
+	};
+
+  if (notification === null) {
+    return null;
+  }
+
+  return (
+    <div style={style}>{notification}</div>
+  );
+};
 
 const App = () => {
   const [date, setDate] = useState('');
@@ -8,24 +24,29 @@ const App = () => {
   const [visibility, setVisibility] = useState('');
   const [comment, setComment] = useState('');
   const [diaries, setDiaries] = useState<Diary[]>([]);
+	const [notification, setNotification] = useState('');
 
 	useEffect(() => {
     getAllDiaries().then(data => {
-      setDiaries(data)
-    })
-  }, [])
+      setDiaries(data);
+    });
+  }, []);
 
   const diaryCreation = (event: React.SyntheticEvent) => {
-    event.preventDefault()
+    event.preventDefault();
 		const newDiary = {
 			date,
 			weather,
 			visibility,
 			comment
-		}
-    createDiary(newDiary).then(data => {
-      setDiaries(diaries.concat(data))
-    })
+		};
+		createDiary(newDiary)
+			.then(data => setDiaries(diaries.concat(data)))
+			.catch((error) => {
+				console.log(error);
+				setNotification(error.response.data);
+				setTimeout(() => {setNotification('');}, 4000);
+		});
 
     setDate('');
 		setWeather('');
@@ -36,6 +57,7 @@ const App = () => {
 	return (
     <div>
 			<h1>Add new entry</h1>
+			<Notification notification={notification} />
       <form onSubmit={diaryCreation}>
 				<div>date:
 					<input 
@@ -68,7 +90,7 @@ const App = () => {
 					</div>
 				))}
     </div>
-  )
-}
+  );
+};
 
 export default App;
