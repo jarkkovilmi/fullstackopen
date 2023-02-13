@@ -40,6 +40,7 @@ const App = () => {
 			visibility,
 			comment
 		};
+		console.log(newDiary);
 		createDiary(newDiary)
 			.then(data => setDiaries(diaries.concat(data)))
 			.catch((error) => {
@@ -49,8 +50,6 @@ const App = () => {
 		});
 
     setDate('');
-		setWeather('');
-		setVisibility('');
 		setComment('');
   };
 
@@ -61,18 +60,30 @@ const App = () => {
       <form onSubmit={diaryCreation}>
 				<div>date:
 					<input 
-						value={date} onChange={(event) => setDate(event.target.value)}>
-					</input>
-				</div>
-				<div>weather:
-					<input
-						value={weather} onChange={(event) => setWeather(event.target.value)}>
+						type="date" value={date} onChange={(event) => setDate(event.target.value)}>
 					</input>
 				</div>
 				<div>visibility:
-					<input
-						value={visibility} onChange={(event) => setVisibility(event.target.value)}>
-					</input>
+					great <input type="radio" name="visibility"
+						onChange={() => setVisibility("great")} />
+					good <input type="radio" name="visibility"
+						onChange={() => setVisibility("good")} />
+					ok <input type="radio" name="visibility"
+						onChange={() => setVisibility("ok")} />
+					poor <input type="radio" name="visibility"
+						onChange={() => setVisibility("ok")} />
+				</div>
+				<div>weather:
+					sunny <input type="radio" name="weather"
+						onChange={() => setWeather("sunny")} />
+					rainy <input type="radio" name="weather"
+						onChange={() => setWeather("rainy")} />
+					cloudy <input type="radio" name="weather"
+						onChange={() => setWeather("cloudy")} />
+					stormy <input type="radio" name="weather"
+						onChange={() => setWeather("stormy")} />
+					windy <input type="radio" name="weather"
+						onChange={() => setWeather("windy")} />
 				</div>
 				<div>comment:
 					<input
