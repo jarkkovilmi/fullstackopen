@@ -6,7 +6,7 @@ const toNewPatient = (object: unknown): NewPatient => {
   }
 
   if ('name' in object && 'dateOfBirth' in object && 'ssn' in object 
-		&& 'gender' in object && 'occupation' in object) {
+		&& 'gender' in object && 'occupation' in object && 'entries' in object) {
     const newPatient: NewPatient = {
       name: parseName(object.name),
       dateOfBirth: parseDateOfBirth(object.dateOfBirth),
