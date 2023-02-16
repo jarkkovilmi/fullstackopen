@@ -1,4 +1,4 @@
-import { Patient, Gender } from "../src/types";
+import { Patient, Gender } from '../src/types';
 // import toNewPatient from "../src/utils";
 
 const patients: Patient[] = [
@@ -17,7 +17,7 @@ const patients: Patient[] = [
         specialist: 'MD House',
         diagnosisCodes: ['S62.5'],
         description:
-          "Healing time appr. 2 weeks. patient doesn't remember how he got the injury.",
+          'Healing time appr. 2 weeks. patient doesn\'t remember how he got the injury.',
         discharge: {
           date: '2015-01-16',
           criteria: 'Thumb has healed.',
