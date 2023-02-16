@@ -8,7 +8,7 @@ interface Props {
 
 const Entries = ({ entries, diagnoses }: Props) => {
 	const entryStyle = {
-		borderWidth: 2,
+		borderWidth: "2px",
 		borderStyle: "solid",
 		borderColor: "black",
 		borderRadius: "10px",
@@ -21,6 +21,7 @@ const Entries = ({ entries, diagnoses }: Props) => {
 
 	return (
 		<div>
+			<h3>entries</h3>
 			{entries.map(entry => (
 				<div style={entryStyle} key={entry.id}>
 					<EntryDetails entry={entry} diagnoses={diagnoses} />

@@ -2,10 +2,11 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Male, Female, Transgender } from '@mui/icons-material';
 
-import { Diagnosis, Gender, Patient } from "../../types";
+import { Diagnosis, Entry, Gender, Patient } from "../../types";
 
 import patientService from "../../services/patients";
 import Entries from "./Entries";
+import AddEntryForm from "./AddEntryForm";
 
 interface Props {
 	diagnoses: Diagnosis[]
@@ -13,6 +14,7 @@ interface Props {
 
 const PatientInfoPage = ({ diagnoses }: Props) => {
 	const [patient, setPatient] = useState<Patient | null>(null);
+	const [entries, setEntries] = useState<Entry[] | null>(null);
 	const id = useParams().id;
 
 	useEffect(() => {
@@ -20,11 +22,12 @@ const PatientInfoPage = ({ diagnoses }: Props) => {
 		const fetchPatient = async () => {
 			const patient = await patientService.getPatient(id);
 			setPatient(patient);
+			setEntries(patient.entries);
 		};
 		fetchPatient();
 	}, [id]);
 
-	if (!patient)
+	if (!patient || !entries)
 		return <div>Patient not found</div>;
 
 	const renderGenderIcon = (gender: Gender) => {
@@ -41,34 +44,13 @@ const PatientInfoPage = ({ diagnoses }: Props) => {
 		}
 	};
 
-	// const entryStyle = {
-	// 	borderWidth: 1,
-	// 	borderStyle: "dashed",
-	// 	borderColor: "black",
-	// 	margin: "10px",
-	// 	padding: "5px"
-	// };
-
-	// const renderEntries = (entries: Entry[]) => {
-	// 	if (entries.length === 0)
-	// 		return <div>No entries.</div>;
-
-	// 	return (
-	// 		patient.entries.map(entry => (
-	// 			<div style={entryStyle} key={entry.id}>
-	// 				<EntryDetails entry={entry} diagnoses={diagnoses} />
-	// 			</div>
-	// 		))
-	// 	);
-	// };
-
 	return (
 		<div>
 			<h2>{patient.name} {renderGenderIcon(patient.gender)}</h2>
 			<div>ssn: {patient.ssn}</div>
 			<div>occupation: {patient.occupation}</div>
-			<h3>entries</h3>
-			<Entries entries={patient.entries} diagnoses={diagnoses} />
+			<AddEntryForm id={id} setEntries={setEntries} entries={entries} />
+			<Entries entries={entries} diagnoses={diagnoses} />
 		</div>
 	);
 };
