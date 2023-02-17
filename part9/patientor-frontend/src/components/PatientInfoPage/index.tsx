@@ -49,7 +49,7 @@ const PatientInfoPage = ({ diagnoses }: Props) => {
 			<h2>{patient.name} {renderGenderIcon(patient.gender)}</h2>
 			<div>ssn: {patient.ssn}</div>
 			<div>occupation: {patient.occupation}</div>
-			<AddEntryForm id={id} setEntries={setEntries} entries={entries} />
+			<AddEntryForm id={id} setEntries={setEntries} entries={entries} diagnoses={diagnoses} />
 			<Entries entries={entries} diagnoses={diagnoses} />
 		</div>
 	);

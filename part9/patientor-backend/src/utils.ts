@@ -8,7 +8,7 @@ const toNewPatient = (object: unknown): NewPatient => {
   }
 
   if ('name' in object && 'dateOfBirth' in object && 'ssn' in object 
-		&& 'gender' in object && 'occupation' in object && 'entries' in object) {
+		&& 'gender' in object && 'occupation' in object) {
     const newPatient: NewPatient = {
       name: parseName(object.name),
       dateOfBirth: parseDate(object.dateOfBirth),
@@ -115,7 +115,7 @@ const parseEmployerName = (employerName: unknown): string => {
   return employerName;
 };
 
-const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> =>  {
+const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> => {
   if (!object || typeof object !== 'object' || !('diagnosisCodes' in object)) {
     return [] as Array<Diagnosis['code']>;
   }
@@ -165,7 +165,7 @@ export const toNewPatientEntry = (object: unknown): EntryWithoutId => {
 	if ('diagnosisCodes' in object) {
 		baseEntry = {
 			...baseEntry,
-			diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes)
+			diagnosisCodes: parseDiagnosisCodes(object)
 		};
 	}
 

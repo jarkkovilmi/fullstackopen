@@ -17,7 +17,12 @@ const Entries = ({ entries, diagnoses }: Props) => {
 	};
 
 	if (entries.length === 0)
-		return <div>No entries.</div>;
+		return (
+			<div>
+				<h3>entries</h3>
+				<div>No entries.</div>
+			</div>
+		);
 
 	return (
 		<div>
