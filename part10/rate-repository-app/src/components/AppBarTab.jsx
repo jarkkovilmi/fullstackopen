@@ -1,10 +1,16 @@
-import { Pressable } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import Text from './Text';
 
-const AppBarTab = () => {
+const styles = StyleSheet.create({
+  tab: {
+		marginLeft: 10
+  }
+});
+
+const AppBarTab = ({ text }) => {
 	return (
 		<Pressable>
-			<Text color={'textAppBar'}>Repositories</Text>
+			<Text style={styles.tab} color={'textAppBar'}>{text}</Text>
 		</Pressable>
 	);
 };
