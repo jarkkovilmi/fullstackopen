@@ -6,7 +6,6 @@ import RepositoryList from './RepositoryList';
 import theme from '../theme';
 import SignIn from './SignIn';
 
-
 const styles = StyleSheet.create({
   container: {
 		backgroundColor: theme.colors.mainBackground,
