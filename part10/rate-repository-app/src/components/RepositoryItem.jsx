@@ -38,10 +38,10 @@ const RepositoryItem = (props) => {
 		<View style={styles.container}>
 			<View style={styles.containerRow}>
 				<View>
-					<Image style={styles.avatar} source={{ uri: props.item.ownerAvatarUrl }}/>
+					<Image style={styles.avatar} source={{ uri: props.item.ownerAvatarUrl }} />
 				</View>
 				<View style={styles.info}>
-					<Text style={{ margin: 5 }}  fontWeight='bold'>{props.item.fullName}</Text>
+					<Text style={{ margin: 5 }} fontWeight='bold'>{props.item.fullName}</Text>
 					<Text style={{ margin: 5 }} color='textSecondary'>{props.item.description}</Text>
 					<Text style={styles.language}>{props.item.language}</Text>
 				</View>
