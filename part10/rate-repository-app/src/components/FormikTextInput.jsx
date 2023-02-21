@@ -7,8 +7,10 @@ import theme from '../theme';
 
 const styles = StyleSheet.create({
   errorText: {
-    marginTop: 5,
-		backgroundColor: theme.colors.error
+    marginBottom: 5,
+		marginLeft: 10,
+		color: theme.colors.error,
+		borderColor: theme.colors.error
   },
 });
 
