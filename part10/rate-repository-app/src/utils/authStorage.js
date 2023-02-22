@@ -28,33 +28,3 @@ class AuthStorage {
 }
 
 export default AuthStorage;
-
-/*
-class ShoppingCartStorage {
-  constructor(namespace = 'shoppingCart') {
-    this.namespace = namespace;
-  }
-
-  async getProducts() {
-    const rawProducts = await AsyncStorage.getItem(
-      `${this.namespace}:products`,
-    );
-
-    return rawProducts ? JSON.parse(rawProducts) : [];
-  }
-
-  async addProduct(productId) {
-    const currentProducts = await this.getProducts();
-    const newProducts = [...currentProducts, productId];
-
-    await AsyncStorage.setItem(
-      `${this.namespace}:products`,
-      JSON.stringify(newProducts),
-    );
-  }
-
-  async clearProducts() {
-    await AsyncStorage.removeItem(`${this.namespace}:products`);
-  }
-}
-*/
