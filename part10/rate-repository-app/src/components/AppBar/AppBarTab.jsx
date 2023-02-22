@@ -3,12 +3,19 @@ import Text from '../Text';
 
 const styles = StyleSheet.create({
   tab: {
-		marginLeft: 10
+		marginHorizontal: 10
   }
 });
 
-const AppBarTab = ({ text }) => (
-	<Text style={styles.tab} color='textAppBar' fontWeight='bold'>{text}</Text>
+const AppBarTab = ({ text, ...props }) => (
+	<Text
+		style={styles.tab}
+		color='textAppBar'
+		fontWeight='bold'
+		{...props}
+	>
+		{text}
+	</Text>
 );
 
 export default AppBarTab;
