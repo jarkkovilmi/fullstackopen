@@ -24,7 +24,7 @@ const AppBar = () => {
 	const { data } = useQuery(ME);
 	const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
-	const authenticated = data ? data.me : null;
+	const authenticated = data?.me;
 
 	const signOut = async () => {
 		await authStorage.removeAccessToken();

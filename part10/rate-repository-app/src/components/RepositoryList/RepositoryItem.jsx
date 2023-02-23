@@ -33,24 +33,24 @@ const styles = StyleSheet.create({
   },
 });
 
-const RepositoryItem = (props) => {
+const RepositoryItem = ({ item }) => {
 	return (
-		<View style={styles.container}>
+		<View style={styles.container} testID="repositoryItem">
 			<View style={styles.containerRow}>
 				<View>
-					<Image style={styles.avatar} source={{ uri: props.item.ownerAvatarUrl }} />
+					<Image style={styles.avatar} source={{ uri: item.ownerAvatarUrl }} />
 				</View>
 				<View style={styles.info}>
-					<Text style={{ margin: 5 }} fontWeight='bold'>{props.item.fullName}</Text>
-					<Text style={{ margin: 5 }} color='textSecondary'>{props.item.description}</Text>
-					<Text style={styles.language}>{props.item.language}</Text>
+					<Text style={{ margin: 5 }} fontWeight='bold'>{item.fullName}</Text>
+					<Text style={{ margin: 5 }} color='textSecondary'>{item.description}</Text>
+					<Text style={styles.language}>{item.language}</Text>
 				</View>
 			</View>
 			<Statistics
-				stars={props.item.stargazersCount}
-				forks={props.item.forksCount}
-				reviews={props.item.reviewCount}
-				rating={props.item.ratingAverage}
+				stars={item.stargazersCount}
+				forks={item.forksCount}
+				reviews={item.reviewCount}
+				rating={item.ratingAverage}
 			/>
 		</View>
 	);
