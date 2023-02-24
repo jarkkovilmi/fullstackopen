@@ -13,6 +13,8 @@ export const REPOSITORY_BASE_FIELDS = gql`
     description
     language
     createdAt
+		reviewCount
+		ratingAverage
   }
 `;
 

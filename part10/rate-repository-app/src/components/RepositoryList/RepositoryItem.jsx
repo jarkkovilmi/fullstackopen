@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
 		color: theme.colors.appBarText
 	},
   avatar: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
 		borderRadius: 4
   },
 	buttonContainer: {
@@ -43,36 +43,42 @@ const styles = StyleSheet.create({
 		color: 'white',
 		textAlign: 'center',
 		fontWeight: theme.fontWeights.bold,
+	},
+	descriptionText: {
+		margin: 5
+	},
+	nameText: {
+		margin: 5
 	}
 });
 
 const RepositoryItem = ({ repository, single = false }) => {
 	return (
-			<View style={styles.container} testID="repositoryItem">
-				<View style={styles.containerRow}>
-					<View>
-						<Image style={styles.avatar} source={{ uri: repository.ownerAvatarUrl }} />
-					</View>
-					<View style={styles.infoContainer}>
-						<Text style={{ margin: 5 }} fontWeight='bold'>{repository.fullName}</Text>
-						<Text style={{ margin: 5 }} color='textSecondary'>{repository.description}</Text>
-						<Text style={styles.language}>{repository.language}</Text>
-					</View>
+		<View style={styles.container} testID="repositoryItem">
+			<View style={styles.containerRow}>
+				<View>
+					<Image style={styles.avatar} source={{ uri: repository.ownerAvatarUrl }} />
 				</View>
-				<Statistics
-					stars={repository.stargazersCount}
-					forks={repository.forksCount}
-					reviews={repository.reviewCount}
-					rating={repository.ratingAverage}
-				/>
-				{single && (
-					<View style={styles.buttonContainer}>
-						<Pressable onPress={() => Linking.openURL(repository.url)}>
-							<Text style={styles.buttonText}>Open in GitHub</Text>
-						</Pressable>
-					</View>
-            )}
+				<View style={styles.infoContainer}>
+					<Text style={styles.nameText} fontWeight='bold'>{repository.fullName}</Text>
+					<Text style={styles.descriptionText} color='textSecondary'>{repository.description}</Text>
+					<Text style={styles.language}>{repository.language}</Text>
+				</View>
 			</View>
+			<Statistics
+				stars={repository.stargazersCount}
+				forks={repository.forksCount}
+				reviews={repository.reviewCount}
+				rating={repository.ratingAverage}
+			/>
+			{single && (
+				<View style={styles.buttonContainer}>
+					<Pressable onPress={() => Linking.openURL(repository.url)}>
+						<Text style={styles.buttonText}>Open in GitHub</Text>
+					</Pressable>
+				</View>
+					)}
+		</View>
 	);
 };
 

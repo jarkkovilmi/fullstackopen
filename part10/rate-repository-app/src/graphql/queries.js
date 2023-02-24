@@ -7,8 +7,6 @@ export const GET_REPOSITORIES = gql`
 			edges {
 				node {
 					...repositoryBaseFields
-					reviewCount
-					ratingAverage
 				}
     	}
     }
@@ -17,7 +15,7 @@ export const GET_REPOSITORIES = gql`
 	${REPOSITORY_BASE_FIELDS}
 `;
 
-export const ME = gql`
+export const GET_CURRENT_USER = gql`
 	query {
 		me {
 			...userBaseFields
@@ -29,17 +27,24 @@ export const ME = gql`
 
 export const GET_REPOSITORY = gql`
     query getRepository($id: ID!) {
-        repository(id: $id) {
-					id
-					fullName
-					description
-					language
-					ownerAvatarUrl
-					stargazersCount
-					forksCount
-					reviewCount
-					ratingAverage
-					url
-        }
-    }
+			repository(id: $id) {
+				...repositoryBaseFields
+			reviews {
+				edges {
+					node {
+						id
+						text
+						rating
+						createdAt
+						user {
+							id
+							username
+						}
+					}
+				}
+			}
+		}
+	}
+
+	${REPOSITORY_BASE_FIELDS}
 `;
