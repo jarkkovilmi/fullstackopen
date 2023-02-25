@@ -1,6 +1,6 @@
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { Link } from 'react-router-native';
 import { useQuery, useApolloClient } from '@apollo/client';
+import { useNavigate } from 'react-router-native';
 
 import Constants from 'expo-constants';
 import theme from '../../theme';
@@ -13,37 +13,36 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
     paddingTop: Constants.statusBarHeight,
     backgroundColor: theme.colors.appBarBackground,
-		padding: 20
-  },
-	tab: {
-		marginHorizontal: 10
+		paddingVertical: 20
   }
 });
 
 const AppBar = () => {
-	const { data } = useQuery(GET_CURRENT_USER);
 	const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
+	const navigate = useNavigate();
+
+	const { data } = useQuery(GET_CURRENT_USER);
 	const authenticated = data?.me;
 
 	const signOut = async () => {
 		await authStorage.removeAccessToken();
     apolloClient.resetStore();
+		navigate('/');
 	};
 
   return (
 		<View style={styles.container}>
 			<ScrollView horizontal>
-				<Link to="/">
-					<AppBarTab text='Repositories' />
-				</Link>
+				<AppBarTab to="/">Repositories</AppBarTab>
 				{authenticated
 					?
-					<AppBarTab text='Sign out' onPress={signOut} />
+					<>
+						<AppBarTab to="/review">Create a review</AppBarTab>
+						<AppBarTab onPress={signOut}>Sign out</AppBarTab>
+					</>
 					:
-					<Link to="/signin">
-						<AppBarTab style={styles.tab} text='Sign in' />
-					</Link>
+					<AppBarTab to="/signin">Sign in</AppBarTab>
 				}
 			</ScrollView>
 		</View>

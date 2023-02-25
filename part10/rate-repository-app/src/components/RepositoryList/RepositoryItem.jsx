@@ -77,7 +77,7 @@ const RepositoryItem = ({ repository, single = false }) => {
 						<Text style={styles.buttonText}>Open in GitHub</Text>
 					</Pressable>
 				</View>
-					)}
+			)}
 		</View>
 	);
 };
