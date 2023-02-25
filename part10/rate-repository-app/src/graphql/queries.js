@@ -5,10 +5,12 @@ export const GET_REPOSITORIES = gql`
 	query getRepositories(
 		$orderDirection: OrderDirection
 		$orderBy: AllRepositoriesOrderBy
+		$searchKeyword: String
 		) {
 		repositories(
 			orderBy: $orderBy
 			orderDirection: $orderDirection
+			searchKeyword: $searchKeyword
 			) {
 			edges {
 				node {

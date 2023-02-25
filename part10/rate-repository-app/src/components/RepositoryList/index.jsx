@@ -1,12 +1,13 @@
 import { FlatList, View, Pressable } from 'react-native';
 import { useNavigate } from 'react-router-native';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../../hooks/useRepositories';
 import ItemSeparator from '../ItemSeparator';
 import SortingMenu from './SortingMenu';
+import SearchBar from './SearchBar';
 
-export const RepositoryListContainer = ({ repositories, sorting, setSorting }) => {
+export const RepositoryListContainer = ({ repositories, sorting, setSorting, searchKeyword, setSearchKeyword }) => {
 	const navigate = useNavigate();
 
   const repositoryNodes = repositories
@@ -25,7 +26,10 @@ export const RepositoryListContainer = ({ repositories, sorting, setSorting }) =
 				)}
         keyExtractor={item => item.id}
 				ListHeaderComponent={() => (
-					<SortingMenu sorting={sorting} setSorting={setSorting} />
+					<>
+						<SearchBar setSearchKeyword={setSearchKeyword} searchKeyword={searchKeyword} />
+						<SortingMenu sorting={sorting} setSorting={setSorting} />
+					</>
 				)}
 			/>
 		</View>
@@ -34,8 +38,10 @@ export const RepositoryListContainer = ({ repositories, sorting, setSorting }) =
 
 const RepositoryList = () => {
 	const [sorting, setSorting] = useState('latest');
+	const [searchKeyword, setSearchKeyword] = useState('');
   const { repositories } = useRepositories({
-    sortingMethod: sorting
+    sortingMethod: sorting,
+		searchKeyword
   });
 
   return (
@@ -43,6 +49,8 @@ const RepositoryList = () => {
 			repositories={repositories}
 			sorting={sorting}
 			setSorting={setSorting}
+			searchKeyword={searchKeyword}
+			setSearchKeyword={setSearchKeyword}
 		/>
 	);
 };

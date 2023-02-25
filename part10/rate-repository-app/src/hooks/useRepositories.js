@@ -16,10 +16,15 @@ const sortingMethods = {
 	}
 };
 
-const useRepositories = ({ sortingMethod }) => {
+const useRepositories = ({ sortingMethod, searchKeyword }) => {
+	const variables = {
+		...sortingMethods[sortingMethod],
+		searchKeyword
+	};
+
 	const { data } = useQuery(GET_REPOSITORIES, {
 		fetchPolicy: 'cache-and-network',
-		variables: sortingMethods[sortingMethod]
+		variables
 	});
 
   return { repositories: data?.repositories };
