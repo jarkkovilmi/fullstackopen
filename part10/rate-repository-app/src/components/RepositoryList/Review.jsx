@@ -46,9 +46,7 @@ const Review = () => {
 		const rating = Number(values.rating);
     try {
       const { data } = await createReview({ ownerName, repositoryName, rating, text });
-			if (data) {
-        navigate(`/${data.createReview.repositoryId}`);
-      }
+      navigate(`/${data.createReview.repositoryId}`);
     } catch (e) {
       console.log(e);
     }
