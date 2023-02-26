@@ -16,18 +16,39 @@ const sortingMethods = {
 	}
 };
 
-const useRepositories = ({ sortingMethod, searchKeyword }) => {
+const useRepositories = ({ sortingMethod, searchKeyword, first }) => {
 	const variables = {
 		...sortingMethods[sortingMethod],
-		searchKeyword
+		searchKeyword,
+		first
 	};
 
-	const { data } = useQuery(GET_REPOSITORIES, {
+	const { data, loading, fetchMore, ...result } = useQuery(GET_REPOSITORIES, {
 		fetchPolicy: 'cache-and-network',
 		variables
 	});
 
-  return { repositories: data?.repositories };
+	const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        after: data.repositories.pageInfo.endCursor,
+        ...variables,
+      },
+    });
+  };
+
+  return {
+		repositories: data?.repositories,
+    fetchMore: handleFetchMore,
+    loading,
+    ...result,
+	};
 };
 
 export default useRepositories;

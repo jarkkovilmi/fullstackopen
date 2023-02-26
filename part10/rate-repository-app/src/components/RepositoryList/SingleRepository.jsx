@@ -1,12 +1,11 @@
 import { View, FlatList, StyleSheet } from 'react-native';
 import { useParams } from 'react-router-native';
-import { useQuery } from '@apollo/client';
 import Text from '../Text';
 import theme from '../../theme';
-import { GET_REPOSITORY } from '../../graphql/queries';
 import RepositoryItem from './RepositoryItem';
 import ItemSeparator from '../ItemSeparator';
 import formatDate from '../../utils/formatDate';
+import useSingleRepository from '../../hooks/useSingleRepository';
 
 const styles = StyleSheet.create({
 	container: {
@@ -67,20 +66,22 @@ const ReviewItem = ({ review }) => {
 
 const SingleRepository = () => {
 	const { id } = useParams();
-	const { data, loading }  = useQuery(GET_REPOSITORY, {
-		fetchPolicy: 'cache-and-network',
-		variables: { id },
-	});
-
-	const repository = data?.repository;
+	const { repository, loading, fetchMore } = useSingleRepository({
+		id,
+		first: 4
+  });
 
 	const reviews = repository
 		? repository.reviews.edges.map((edge) => edge.node)
 		: [];
 
-	if (loading)  {
+	if (loading) {
 		return <View><Text>loading...</Text></View>;
   }
+
+	const onEndReach = () => {
+		fetchMore();
+  };
 
 	return (
     <FlatList
@@ -94,6 +95,8 @@ const SingleRepository = () => {
 					<ItemSeparator />
 				</>
 			}
+			onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };

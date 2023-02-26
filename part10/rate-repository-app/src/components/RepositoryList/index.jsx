@@ -7,7 +7,9 @@ import ItemSeparator from '../ItemSeparator';
 import SortingMenu from './SortingMenu';
 import SearchBar from './SearchBar';
 
-export const RepositoryListContainer = ({ repositories, sorting, setSorting, searchKeyword, setSearchKeyword }) => {
+export const RepositoryListContainer = ({
+	repositories, sorting, setSorting, searchKeyword, setSearchKeyword, onEndReach
+	}) => {
 	const navigate = useNavigate();
 
   const repositoryNodes = repositories
@@ -31,6 +33,8 @@ export const RepositoryListContainer = ({ repositories, sorting, setSorting, sea
 						<SortingMenu sorting={sorting} setSorting={setSorting} />
 					</>
 				)}
+				onEndReached={onEndReach}
+				onEndReachedThreshold={0.5}
 			/>
 		</View>
   );
@@ -39,14 +43,20 @@ export const RepositoryListContainer = ({ repositories, sorting, setSorting, sea
 const RepositoryList = () => {
 	const [sorting, setSorting] = useState('latest');
 	const [searchKeyword, setSearchKeyword] = useState('');
-  const { repositories } = useRepositories({
-    sortingMethod: sorting,
-		searchKeyword
+  const { repositories, fetchMore } = useRepositories({
+		sortingMethod: sorting,
+		searchKeyword,
+		first: 8
   });
+
+	const onEndReach = () => {
+    fetchMore();
+  };
 
   return (
 		<RepositoryListContainer
 			repositories={repositories}
+			onEndReach={onEndReach}
 			sorting={sorting}
 			setSorting={setSorting}
 			searchKeyword={searchKeyword}
