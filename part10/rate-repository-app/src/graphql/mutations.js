@@ -26,3 +26,9 @@ export const CREATE_USER = gql`
 
 	${USER_BASE_FIELDS}
 `;
+
+export const DELETE_REVIEW = gql`
+	mutation deleteReview($deleteReviewId: ID!) {
+		deleteReview(id: $deleteReviewId)
+	}
+`;

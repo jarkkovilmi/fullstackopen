@@ -3,10 +3,10 @@ import { useQuery } from '@apollo/client';
 import ItemSeparator from '../ItemSeparator';
 import Text from '../Text';
 import { GET_CURRENT_USER } from '../../graphql/queries';
-import { ReviewItem } from './SingleRepository';
+import ReviewItem from './ReviewItem';
 
 const UserReviews = () => {
-	const { data, loading } = useQuery(GET_CURRENT_USER, {
+	const { data, loading, refetch } = useQuery(GET_CURRENT_USER, {
     variables: { includeReviews: true }
   });
 
@@ -21,7 +21,9 @@ const UserReviews = () => {
 	return (
     <FlatList
       data={reviews}
-      renderItem={({ item }) => <ReviewItem review={item} user={true} />}
+      renderItem={({ item }) => (
+				<ReviewItem review={item} user={true} refetch={refetch} />
+			)}
       keyExtractor={({ id }) => id}
 			ItemSeparatorComponent={ItemSeparator}
     />

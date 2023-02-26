@@ -34,6 +34,7 @@ export const REVIEW_BASE_FIELDS = gql`
 		createdAt
 		repository {
 			fullName
+			id
 		}
 		user {
 			id
@@ -41,5 +42,3 @@ export const REVIEW_BASE_FIELDS = gql`
 		}
   }
 `;
-
-
