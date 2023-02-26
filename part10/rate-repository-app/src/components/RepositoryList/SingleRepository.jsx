@@ -43,7 +43,7 @@ const RepositoryInfo = ({ repository }) => {
 	return <RepositoryItem repository={repository} single={true} />;
 };
 
-const ReviewItem = ({ review }) => {
+export const ReviewItem = ({ review, user = false }) => {
   return (
 		<View style={styles.container} testID="repositoryItem">
 			<View style={styles.containerRow}>
@@ -53,7 +53,15 @@ const ReviewItem = ({ review }) => {
 					</Text>
 				</View>
 				<View style={styles.infoContainer}>
-					<Text style={styles.nameText} fontWeight='bold'>{review.user.username}</Text>
+					{user ?
+						<Text style={styles.nameText} fontWeight='bold'>
+							{review.repository.fullName}
+						</Text>
+						:
+						<Text style={styles.nameText} fontWeight='bold'>
+							{review.user.username}
+						</Text>
+					}
 					<Text style={styles.reviewText} color='textSecondary'>
 						{formatDate(review.createdAt)}
 					</Text>

@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { REPOSITORY_BASE_FIELDS, USER_BASE_FIELDS } from './fragments';
+import { REPOSITORY_BASE_FIELDS, USER_BASE_FIELDS, REVIEW_BASE_FIELDS } from './fragments';
 
 export const GET_REPOSITORIES = gql`
 	query getRepositories(
@@ -33,13 +33,27 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_CURRENT_USER = gql`
-	query {
-		me {
-			...userBaseFields
-		}
-	}
+  query getCurrentUser($includeReviews: Boolean = false) {
+    me {
+      ...userBaseFields
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            ...reviewBaseFields
+          }
+          cursor
+        }
+        pageInfo {
+					endCursor
+					startCursor
+					hasNextPage
+        }
+      }
+    }
+  }
 
 	${USER_BASE_FIELDS}
+	${REVIEW_BASE_FIELDS}
 `;
 
 export const GET_REPOSITORY = gql`
@@ -50,14 +64,7 @@ export const GET_REPOSITORY = gql`
 				totalCount
 				edges {
 					node {
-						id
-						text
-						rating
-						createdAt
-						user {
-							id
-							username
-						}
+						...reviewBaseFields
 					}
 					cursor
 				}
@@ -71,4 +78,5 @@ export const GET_REPOSITORY = gql`
 	}
 
 	${REPOSITORY_BASE_FIELDS}
+	${REVIEW_BASE_FIELDS}
 `;
