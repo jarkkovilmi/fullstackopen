@@ -1,0 +1,3 @@
+[submodule "part11/fullstackopen-pokedex"]
+	path = part11/fullstackopen-pokedex
+	url = https://github.com/jarkkovilmi/fullstackopen-pokedex.git
