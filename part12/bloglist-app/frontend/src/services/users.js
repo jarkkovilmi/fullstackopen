@@ -1,6 +1,5 @@
-// import axios from 'axios'
 import axios from '../utils/apiClient'
-const baseUrl = '/api/users'
+const baseUrl = '/users'
 
 const getAll = async () => {
 	const response = await axios.get(baseUrl)

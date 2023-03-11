@@ -1,6 +1,5 @@
-// import axios from 'axios'
 import axios from '../utils/apiClient'
-const baseUrl = '/api/blogs'
+const baseUrl = '/blogs'
 
 let token = null
 
